@@ -28,7 +28,7 @@ class ImageConstant {
   static String imgEdit = '$imagePath/img_edit.svg';
   static String imgShare = '$imagePath/img_share.svg';
   static String imgDelete = '$imagePath/img_delete.svg';
-  static String imgMore = '$imagePath/img_more.svg';
+  static String imgMore = '$imagePath/img_user.svg';
   static String imgSettings = '$imagePath/img_settings.svg';
   static String imgNotification = '$imagePath/img_notification.svg';
   static String imgLogo = '$imagePath/img_logo.svg';

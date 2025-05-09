@@ -94,11 +94,14 @@ class TripCard extends StatelessWidget {
           child: CustomIconButton(
             height: 32.h,
             width: 32.h,
-            decoration: IconButtonStyleHelper.none,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+            ),
             onTap: onMoreTap,
-            child: Icon(
-              Icons.more_horiz,
-              color: appTheme.whiteA700,
+            child: SvgPicture.asset(
+              ImageConstant.imgMore,
+              height: 32.h,
+              width: 32.h,
             ),
           ),
         ),
