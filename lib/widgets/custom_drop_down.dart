@@ -23,11 +23,13 @@ class CustomDropDown extends StatelessWidget {
     this.filled = true,
     this.validator,
     this.onChanged,
+    this.height,
   });
 
   final AlignmentGeometry? alignment;
 
   final double? width;
+  final double? height;
 
   final BoxDecoration? boxDecoration;
 
@@ -75,6 +77,7 @@ class CustomDropDown extends StatelessWidget {
 
   Widget get dropDownWidget => Container(
     width: width ?? double.maxFinite,
+    height: height,
     decoration: boxDecoration,
     child: DropdownButtonFormField(
       focusNode: focusNode,
@@ -110,26 +113,23 @@ class CustomDropDown extends StatelessWidget {
     prefixIcon: prefix,
     prefixIconConstraints: prefixConstraints,
     isDense: true,
-    contentPadding: contentPadding ?? EdgeInsetsDirectional.all(4.h),
+    contentPadding: contentPadding ?? EdgeInsets.all(4.h),
     fillColor: fillColor ?? appTheme.black900.withOpacity(0.4),
     filled: filled,
-    border:
-        borderDecoration ??
+    border: borderDecoration ??
         OutlineInputBorder(
           borderRadius: BorderRadius.circular(14.h),
-          borderSide: BorderSide(color: appTheme.deepOrange800),
+          borderSide: BorderSide(color: appTheme.deepOrange800, width: 1),
         ),
-    enabledBorder:
-        borderDecoration ??
+    enabledBorder: borderDecoration ??
         OutlineInputBorder(
           borderRadius: BorderRadius.circular(14.h),
-          borderSide: BorderSide(color: appTheme.deepOrange800),
+          borderSide: BorderSide(color: appTheme.deepOrange800, width: 1),
         ),
-    focusedBorder:
-        borderDecoration ??
+    focusedBorder: borderDecoration ??
         OutlineInputBorder(
           borderRadius: BorderRadius.circular(14.h),
-          borderSide: BorderSide(color: appTheme.deepOrange800),
+          borderSide: BorderSide(color: appTheme.deepOrange800, width: 1),
         ),
   );
 }

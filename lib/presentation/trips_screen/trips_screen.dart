@@ -7,7 +7,6 @@ import 'widgets/app_bar/appbar_title_image.dart';
 import 'widgets/app_bar/appbar_trailing_image.dart';
 import 'widgets/app_bar/appbar_trailing_image_one.dart';
 import 'widgets/app_bar/custom_app_bar.dart';
-import 'widgets/custom_icon_button.dart';
 
 class TripsScreen extends StatelessWidget {
   const TripsScreen({super.key});
@@ -40,13 +39,10 @@ class TripsScreen extends StatelessWidget {
       leadingWidth: 56.h,
       leading: AppbarLeadingImage(
         imagePath: ImageConstant.imgLinearInterface, // Menu/hamburger icon
-        margin: EdgeInsets.only(left: 16.h),
       ),
       title: AppbarTitleImage(
         imagePath: ImageConstant.imgLogoipsum3321, // Logo image
         height: 40.h,
-        width: 110.h,
-        margin: EdgeInsets.only(left: 16.h),
       ),
       centerTitle: false,
       actions: [
@@ -132,37 +128,31 @@ class TripsScreen extends StatelessWidget {
     final trips = TripModel.getDummyTrips();
 
     return Expanded(
-      child: Padding(
-        padding: EdgeInsets.zero, // Updated from only(right: 6.h) to zero
-        child: ListView.separated(
-          padding: EdgeInsets.zero,
-          physics: BouncingScrollPhysics(),
-          shrinkWrap: true,
-          separatorBuilder: (context, index) {
-            return SizedBox(height: 16.h);
-          },
-          itemCount: trips.length,
-          itemBuilder: (context, index) {
-            final trip = trips[index];
-            return TripCard(
-              imageUrl: trip.imagePath,
-              title: trip.title,
-              dateRange: trip.dateRangeText,
-              unfinishedTasks: trip.unfinishedTasks,
-              avatarUrls: trip.participantAvatars,
-              onCardTap: () {
-                // Handle card tap
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Tapped on ${trip.title}')),
-                );
-              },
-              onMoreTap: () {
-                // Handle more options
-                _showOptionsMenu(context, trip);
-              },
-            );
-          },
-        ),
+      child: ListView.separated(
+        padding: EdgeInsets.only(top: 8.h, bottom: 16.h),
+        physics: BouncingScrollPhysics(),
+        itemCount: trips.length,
+        separatorBuilder: (context, index) {
+          return SizedBox(height: 16.h);
+        },
+        itemBuilder: (context, index) {
+          final trip = trips[index];
+          return TripCard(
+            imageUrl: trip.imagePath,
+            title: index == 0 ? "Item title" : trip.title, // Make the first card match the image
+            dateRange: index == 0 ? "5 Nights (Jan 16 - Jan 20, 2024)" : trip.dateRangeText,
+            unfinishedTasks: index == 0 ? 4 : trip.unfinishedTasks,
+            avatarUrls: trip.participantAvatars,
+            onCardTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Tapped on ${trip.title}')),
+              );
+            },
+            onMoreTap: () {
+              _showOptionsMenu(context, trip);
+            },
+          );
+        },
       ),
     );
   }

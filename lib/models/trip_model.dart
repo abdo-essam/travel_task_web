@@ -61,7 +61,7 @@ class TripModel {
       TripModel(
         id: '3',
         title: 'Beach Paradise',
-        imagePath: 'assets/images/img_grid.png',
+        imagePath: 'assets/images/img_rectangle_1208.png',
         status: 'Approved',
         startDate: 'Jan 16',
         endDate: 'Jan 20, 2024',
@@ -126,7 +126,7 @@ class TripModel {
       TripModel(
         id: '8',
         title: 'Snowy Retreat',
-        imagePath: 'assets/images/img_grid.png',
+        imagePath: 'assets/images/img_rectangle_1208.png',
         startDate: 'Jan 16',
         endDate: 'Jan 20, 2024',
         nights: 5,

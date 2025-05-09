@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../core/app_export.dart';
 import '../presentation/trips_screen/widgets/custom_icon_button.dart';
 import 'custom_drop_down.dart';
@@ -107,21 +108,38 @@ class TripCard extends StatelessWidget {
 
   Widget _buildStatusDropdown() {
     return CustomDropDown(
-      width: 158.h,
-      icon: Container(
-        margin: EdgeInsets.only(left: 6.h),
-        child: Icon(
-          Icons.keyboard_arrow_down,
-          color: appTheme.whiteA700,
-          size: 16.h,
-        ),
+      width: 156.h,
+      icon: SvgPicture.asset(
+        ImageConstant.imgLinearArrowChevrondown,
+        height: 16.h,
+        width: 16.h,
+        color: appTheme.whiteA700,
       ),
       iconSize: 16.h,
       hintText: "Pending Approval",
+      hintStyle: TextStyle(
+        color: appTheme.whiteA700,
+        fontFamily: 'Inter',
+        fontSize: 14,
+        fontWeight: FontWeight.w400, // Regular
+        height: 1.57, // Line height of 22 ÷ 14
+      ),
+      textStyle: TextStyle(
+        color: appTheme.whiteA700,
+        fontFamily: 'Inter',
+        fontSize: 14,
+        fontWeight: FontWeight.w400, // Regular
+        height: 1.57, // Line height of 22 ÷ 14
+      ),
       items: dropdownItemList,
       contentPadding: EdgeInsets.symmetric(
         horizontal: 12.h,
         vertical: 4.h,
+      ),
+      fillColor: Colors.black.withOpacity(0.4),
+      borderDecoration: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14.h),
+        borderSide: BorderSide(color: Color(0xFFC25F30), width: 0.5), // Using the exact color code from the design
       ),
       onChanged: (value) {},
     );
