@@ -26,7 +26,7 @@ class WebTripCard extends StatelessWidget {
       onTap: onCardTap,
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFF1A1A1A),
+          color: const Color(0xFF111111),
           borderRadius: BorderRadius.circular(8),
         ),
         clipBehavior: Clip.antiAlias,
@@ -39,7 +39,7 @@ class WebTripCard extends StatelessWidget {
                 // Image
                 Image.asset(
                   imageUrl,
-                  height: 182,
+                  height: 220,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
@@ -71,7 +71,7 @@ class WebTripCard extends StatelessWidget {
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF4D4D4D),
+                        color: const Color(0xFF333333),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
@@ -85,8 +85,8 @@ class WebTripCard extends StatelessWidget {
 
                 // Status pill - positioned at bottom of image
                 Positioned(
-                  bottom: 12,
-                  left: 12,
+                  bottom: 16,
+                  left: 16,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
@@ -118,9 +118,9 @@ class WebTripCard extends StatelessWidget {
               ],
             ),
 
-            // Title and date section
+            // Content area
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -137,7 +137,7 @@ class WebTripCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
 
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 8),
 
                   // Date range
                   Row(
@@ -147,7 +147,7 @@ class WebTripCard extends StatelessWidget {
                         color: const Color(0xFF999999),
                         size: 14,
                       ),
-                      const SizedBox(width: 6),
+                      const SizedBox(width: 8),
                       Text(
                         dateRange,
                         style: const TextStyle(
@@ -158,32 +158,23 @@ class WebTripCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
 
-            // Avatar stack and tasks count section (bottom section)
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: Colors.black.withOpacity(0.3),
-                    width: 1,
-                  ),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildAvatarStack(),
-                  Text(
-                    "$unfinishedTasks unfinished tasks",
-                    style: const TextStyle(
-                      color: Color(0xFF999999),
-                      fontSize: 12,
-                      fontFamily: 'Inter',
-                    ),
+                  const SizedBox(height: 16),
+
+                  // Avatar stack and tasks count
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildAvatarStack(),
+                      Text(
+                        "$unfinishedTasks unfinished tasks",
+                        style: const TextStyle(
+                          color: Color(0xFF999999),
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -197,61 +188,88 @@ class WebTripCard extends StatelessWidget {
   Widget _buildAvatarStack() {
     if (avatarUrls.isEmpty) return const SizedBox.shrink();
 
-    // In this design, we show 2 avatars and then a counter
-    const int visibleAvatars = 2;
-    final int extraAvatars = avatarUrls.length > visibleAvatars ?
-    avatarUrls.length - visibleAvatars : 0;
+    // For displaying the avatars in the format shown in the image
+    const double avatarSize = 24;
+    const double avatarOffset = 14; // overlap amount
+    const int maxDisplayedAvatars = 3;
+
+    List<Widget> avatars = [];
+    int overflowCount = 0;
+
+    if (avatarUrls.length <= maxDisplayedAvatars) {
+      // If we have 3 or fewer avatars, show them all
+      for (int i = 0; i < avatarUrls.length; i++) {
+        avatars.add(
+          Positioned(
+            left: i * avatarOffset,
+            child: _buildAvatarCircle(avatarUrls[i]),
+          ),
+        );
+      }
+    } else {
+      // If we have more than 3 avatars, show the first 2 and the count
+      for (int i = 0; i < 2; i++) {
+        avatars.add(
+          Positioned(
+            left: i * avatarOffset,
+            child: _buildAvatarCircle(avatarUrls[i]),
+          ),
+        );
+      }
+
+      overflowCount = avatarUrls.length - 2;
+      avatars.add(
+        Positioned(
+          left: 2 * avatarOffset,
+          child: Container(
+            width: avatarSize,
+            height: avatarSize,
+            decoration: BoxDecoration(
+              color: Color(0xFF333333),
+              shape: BoxShape.circle,
+              border: Border.all(color: Color(0xFF111111), width: 2),
+            ),
+            child: Center(
+              child: Text(
+                "+$overflowCount",
+                style: TextStyle(
+                  color: Color(0xFFFFC268),
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    // Width depends on number of avatars shown (with overlap)
+    double stackWidth = avatarUrls.length <= maxDisplayedAvatars
+        ? (avatarUrls.length - 1) * avatarOffset + avatarSize
+        : 2 * avatarOffset + avatarSize;
 
     return SizedBox(
-      height: 24,
-      width: 80, // Explicit width for the stack
+      width: stackWidth,
+      height: avatarSize,
       child: Stack(
-        children: [
-          for (int i = 0; i < _min(visibleAvatars, avatarUrls.length); i++)
-            Positioned(
-              left: i * 14.0, // Slightly closer overlap
-              child: Container(
-                height: 24,
-                width: 24,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: const Color(0xFF1A1A1A), width: 1.5),
-                  image: DecorationImage(
-                    image: AssetImage(avatarUrls[i]),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-          if (extraAvatars > 0)
-            Positioned(
-              left: _min(visibleAvatars, avatarUrls.length) * 14.0,
-              child: Container(
-                height: 24,
-                width: 24,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF333333),
-                  shape: BoxShape.circle,
-                  border: Border.all(color: const Color(0xFF1A1A1A), width: 1.5),
-                ),
-                child: Center(
-                  child: Text(
-                    "+$extraAvatars",
-                    style: const TextStyle(
-                      color: Color(0xFFFFC062),
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Inter',
-                    ),
-                  ),
-                ),
-              ),
-            ),
-        ],
+        children: avatars,
       ),
     );
   }
 
-  int _min(int a, int b) => a < b ? a : b;
+  Widget _buildAvatarCircle(String imageUrl) {
+    return Container(
+      width: 24,
+      height: 24,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Color(0xFF111111), width: 2),
+        image: DecorationImage(
+          image: AssetImage(imageUrl),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
 }
-
