@@ -40,87 +40,98 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
 
   Widget _buildHeader() {
     return Container(
-      height: 76,
-      padding: const EdgeInsets.symmetric(horizontal: 32),
+      height: 70,
       decoration: const BoxDecoration(
         color: Colors.black,
         border: Border(
           bottom: BorderSide(color: Color(0xFF262626), width: 1),
         ),
       ),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center, // Ensure vertical center alignment
         children: [
-          // Logo
+          // Logo on the left
           CustomImageView(
             imagePath: ImageConstant.imgLogoipsum3321,
-            height: 40,
-            width: 82,
+            height: 34,
+            width: 76,
           ),
 
-          // Nav items - horizontally aligned
+          // Large spacer to push everything to the right
+          Spacer(),
+
+          // Navigation items now positioned on the right
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center, // Ensure vertical center alignment
             children: [
               _buildNavItem('Items', _selectedNavIndex == 0, 0),
-              const SizedBox(width: 28),
+              SizedBox(width: 32),
               _buildNavItem('Pricing', _selectedNavIndex == 1, 1),
-              const SizedBox(width: 28),
+              SizedBox(width: 32),
               _buildNavItem('Info', _selectedNavIndex == 2, 2),
-              const SizedBox(width: 28),
+              SizedBox(width: 32),
               _buildNavItem('Tasks', _selectedNavIndex == 3, 3),
-              const SizedBox(width: 28),
+              SizedBox(width: 32),
               _buildNavItem('Analytics', _selectedNavIndex == 4, 4),
             ],
           ),
 
-          // Right icons
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center, // Ensure vertical center alignment
-            children: [
-              Icon(
-                Icons.settings_outlined,
-                color: Colors.white,
-                size: 20,
-              ),
-              const SizedBox(width: 18),
-              Icon(
-                Icons.notifications_none_outlined,
-                color: Colors.white,
-                size: 20,
-              ),
-              const SizedBox(width: 18),
-              CircleAvatar(
-                radius: 14,
-                backgroundImage: AssetImage(ImageConstant.imgFrame77135),
-              ),
-              const SizedBox(width: 8),
-              const Text(
-                'John Doe',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const SizedBox(width: 4),
-              const Icon(
-                Icons.keyboard_arrow_down,
-                color: Colors.white,
-                size: 16,
-              ),
-            ],
+          // Small spacer between nav items and icons
+          SizedBox(width: 32),
+
+          // Vertical separator line
+          Container(
+            height: 24,
+            width: 1,
+            color: Color(0xFF333333),
+          ),
+
+          // Right side icons
+          SizedBox(width: 32),
+          Icon(
+            Icons.settings_outlined,
+            color: Colors.white,
+            size: 22,
+          ),
+          SizedBox(width: 24),
+          Icon(
+            Icons.notifications_none_outlined,
+            color: Colors.white,
+            size: 22,
+          ),
+          SizedBox(width: 24),
+          // Vertical separator line
+          Container(
+            height: 24,
+            width: 1,
+            color: Color(0xFF333333),
+          ),
+          SizedBox(width: 24),
+          // Profile section
+          CircleAvatar(
+            radius: 16,
+            backgroundImage: AssetImage(ImageConstant.imgFrame77135),
+          ),
+          SizedBox(width: 8),
+          Text(
+            'John Doe',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontFamily: 'Inter',
+            ),
+          ),
+          SizedBox(width: 4),
+          Icon(
+            Icons.keyboard_arrow_down,
+            color: Colors.white,
+            size: 16,
           ),
         ],
       ),
     );
   }
 
-// Updated nav item to have the text aligned on the same line
   Widget _buildNavItem(String title, bool isSelected, int index) {
     return InkWell(
       onTap: () {
@@ -132,20 +143,18 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       child: Container(
-        height: 76, // Full height of header
+        height: 70, // Full header height
         child: Stack(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.center,
           children: [
             // Text centered vertically
-            Center(
-              child: Text(
-                title,
-                style: TextStyle(
-                  color: isSelected ? Colors.white : const Color(0xFF999999),
-                  fontSize: 14,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
+            Text(
+              title,
+              style: TextStyle(
+                color: isSelected ? Colors.white : const Color(0xFF999999),
+                fontSize: 14,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w400,
               ),
             ),
 
