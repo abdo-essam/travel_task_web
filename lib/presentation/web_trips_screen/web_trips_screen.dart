@@ -40,83 +40,63 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
 
   Widget _buildHeader() {
     return Container(
-      height: 70,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      height: 76,
+      padding: const EdgeInsets.symmetric(horizontal: 32), // Use proper padding
       decoration: const BoxDecoration(
+        color: Colors.black,
         border: Border(
           bottom: BorderSide(color: Color(0xFF262626), width: 1),
         ),
       ),
       child: Row(
         children: [
-          // Logo - using CustomImaiew for SVG
+          // Logo
           CustomImageView(
             imagePath: ImageConstant.imgLogoipsum3321,
             height: 40,
-            width: 80,
+            width: 82,
           ),
 
           const Spacer(),
 
-          // Navigation
-          const Text(
-            'Items',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontFamily: 'Inter',
+          // Navigation with orange underline for selected item
+          Container(
+            color: Colors.pink,
+            child: Row(
+              children: [
+                _buildNavItem('Items', _selectedNavIndex == 0, 0),
+                const SizedBox(width: 28),
+                _buildNavItem('Pricing', _selectedNavIndex == 1, 1),
+                const SizedBox(width: 28),
+                _buildNavItem('Info', _selectedNavIndex == 2, 2),
+                const SizedBox(width: 28),
+                _buildNavItem('Tasks', _selectedNavIndex == 3, 3),
+                const SizedBox(width: 28),
+                _buildNavItem('Analytics', _selectedNavIndex == 4, 4),
+              ],
             ),
           ),
-          const SizedBox(width: 24),
-          const Text(
-            'Pricing',
-            style: TextStyle(
-              color: Color(0xFF999999),
-              fontSize: 14,
-              fontFamily: 'Inter',
-            ),
-          ),
-          const SizedBox(width: 24),
-          const Text(
-            'Info',
-            style: TextStyle(
-              color: Color(0xFF999999),
-              fontSize: 14,
-              fontFamily: 'Inter',
-            ),
-          ),
-          const SizedBox(width: 24),
-          const Text(
-            'Tasks',
-            style: TextStyle(
-              color: Color(0xFF999999),
-              fontSize: 14,
-              fontFamily: 'Inter',
-            ),
-          ),
-          const SizedBox(width: 24),
-          const Text(
-            'Analytics',
-            style: TextStyle(
-              color: Color(0xFF999999),
-              fontSize: 14,
-              fontFamily: 'Inter',
-            ),
-          ),
+          const SizedBox(width: 28),
 
-          const SizedBox(width: 24),
-
-          // Right icons
-          const Icon(Icons.settings, color: Colors.white, size: 20),
-          const SizedBox(width: 16),
-          const Icon(Icons.notifications_none, color: Colors.white, size: 20),
-          const SizedBox(width: 16),
+          // Right icons with proper spacing - using MaterialIcons directly since SVG paths might be wrong
+          Icon(
+            Icons.settings_outlined,
+            color: Colors.white,
+            size: 20,
+          ),
+          const SizedBox(width: 18),
+          Icon(
+            Icons.notifications_none_outlined,
+            color: Colors.white,
+            size: 20,
+          ),
+          const SizedBox(width: 18),
 
           // Profile
           Row(
             children: [
               CircleAvatar(
-                radius: 16,
+                radius: 14,
                 backgroundImage: AssetImage(ImageConstant.imgFrame77135),
               ),
               const SizedBox(width: 8),
@@ -126,6 +106,7 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
                   color: Colors.white,
                   fontSize: 14,
                   fontFamily: 'Inter',
+                  fontWeight: FontWeight.w400,
                 ),
               ),
               const SizedBox(width: 4),
@@ -137,6 +118,49 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+// Helper method to build clickable navigation items with correct underline position
+  Widget _buildNavItem(String title, bool isSelected, int index) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _selectedNavIndex = index;
+        });
+      },
+      hoverColor: Colors.transparent,
+      // No hover color
+      splashColor: Colors.transparent,
+      // No splash effect
+      highlightColor: Colors.transparent,
+      // No highlight effect
+      child: SizedBox(
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                color: isSelected ? Colors.white : const Color(0xFF999999),
+                fontSize: 14,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            // Using Spacer to push the underline to the bottom
+            Spacer(),
+            // Orange underline at the bottom
+            Container(
+              height: 2,
+              width: isSelected ? 40 : 0, // Only show when selected
+              decoration: BoxDecoration(
+                color: isSelected ? const Color(0xFFFFC268) : Colors
+                    .transparent,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -180,7 +204,8 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFFC268),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -203,16 +228,37 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
   Widget _buildSimpleGrid() {
     // Create a basic list of trip data
     final trips = [
-      {'title': 'Los Angeles Trip', 'image': 'assets/images/img_rectangle_1208.png'},
-      {'title': 'Chicago Skyline View', 'image': 'assets/images/img_rectangle_1208_182x342.png'},
-      {'title': 'Mountain Retreat', 'image': 'assets/images/img_rectangle_1208.png'},
-      {'title': 'City Explorer', 'image': 'assets/images/img_rectangle_1208_182x342.png'},
-      {'title': 'Countryside Escape', 'image': 'assets/images/img_rectangle_1208.png'},
-      {'title': 'Desert Adventure', 'image': 'assets/images/img_rectangle_1208_182x342.png'},
+      {
+        'title': 'Los Angeles Trip',
+        'image': 'assets/images/img_rectangle_1208.png'
+      },
+      {
+        'title': 'Chicago Skyline View',
+        'image': 'assets/images/img_rectangle_1208_182x342.png'
+      },
+      {
+        'title': 'Mountain Retreat',
+        'image': 'assets/images/img_rectangle_1208.png'
+      },
+      {
+        'title': 'City Explorer',
+        'image': 'assets/images/img_rectangle_1208_182x342.png'
+      },
+      {
+        'title': 'Countryside Escape',
+        'image': 'assets/images/img_rectangle_1208.png'
+      },
+      {
+        'title': 'Desert Adventure',
+        'image': 'assets/images/img_rectangle_1208_182x342.png'
+      },
     ];
 
     // Determine the number of columns based on screen width
-    double screenWidth = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
     int columns = 4;
 
     if (screenWidth < 1200) {
@@ -242,7 +288,8 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
     );
   }
 
-  Widget _buildSimpleTripCard({required String title, required String imagePath}) {
+  Widget _buildSimpleTripCard(
+      {required String title, required String imagePath}) {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF171717),
@@ -294,7 +341,8 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
               children: [
                 // Status
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     border: Border.all(color: const Color(0xFFC25F30)),
                     borderRadius: BorderRadius.circular(14),
