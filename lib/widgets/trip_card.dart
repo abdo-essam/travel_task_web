@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../core/app_export.dart';
 import '../presentation/trips_screen/widgets/custom_icon_button.dart';
-import 'custom_drop_down.dart';
 
 class TripCard extends StatelessWidget {
   final String? imageUrl;
@@ -49,12 +48,14 @@ class TripCard extends StatelessWidget {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min, // Add this to prevent overflowing
             children: [
               _buildImageSection(),
               Padding(
                 padding: EdgeInsets.all(16.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min, // Add this to prevent overflowing
                   children: [
                     _buildStatusDropdown(),
                     SizedBox(height: 16.h),
@@ -109,36 +110,35 @@ class TripCard extends StatelessWidget {
     );
   }
 
-
   Widget _buildStatusDropdown() {
     return Container(
-      width: 160.h,  // Wider to match your design
-      height: 36.h,  // Taller height
+      width: 150.h,
+      height: 36.h,
       decoration: BoxDecoration(
-        color: Color(0xFF1A1A1A),  // Dark background with slight transparency
-        borderRadius: BorderRadius.circular(24.h),  // Very rounded corners (pill shape)
+        color: Color(0xFF1A1A1A),
+        borderRadius: BorderRadius.circular(24.h),
         border: Border.all(
-          color: Color(0xFFC25F30),  // Orange border color
-          width: 1,  // Visible border
+          color: Color(0xFFC25F30),
+          width: 1,
         ),
       ),
       child: DropdownButtonHideUnderline(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.h),  // More horizontal padding
+          padding: EdgeInsets.symmetric(horizontal: 16.h),
           child: DropdownButton<String>(
             icon: SvgPicture.asset(
               ImageConstant.imgLinearArrowChevrondown,
-              height: 20.h,
-              width: 20.h,
+              height: 16.h, // Reduced size
+              width: 16.h,  // Reduced size
               color: appTheme.whiteA700,
             ),
-            dropdownColor: Color(0xFF1A1A1A),  // Match the background
+            dropdownColor: Color(0xFF1A1A1A),
             borderRadius: BorderRadius.circular(16.h),
             style: TextStyle(
               color: appTheme.whiteA700,
               fontFamily: 'Inter',
-              fontSize: 16,  // Larger text size
-              fontWeight: FontWeight.w400,  // Medium weight
+              fontSize: 14, // Reduced size
+              fontWeight: FontWeight.w400,
             ),
             isExpanded: true,
             isDense: true,
@@ -147,9 +147,10 @@ class TripCard extends StatelessWidget {
               style: TextStyle(
                 color: appTheme.whiteA700,
                 fontFamily: 'Inter',
-                fontSize: 16,  // Larger text
-                fontWeight: FontWeight.w400,  // Medium weight
+                fontSize: 14, // Reduced size
+                fontWeight: FontWeight.w400,
               ),
+              overflow: TextOverflow.ellipsis, // Add this
             ),
             items: dropdownItemList.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
@@ -159,9 +160,10 @@ class TripCard extends StatelessWidget {
                   style: TextStyle(
                     color: appTheme.whiteA700,
                     fontFamily: 'Inter',
-                    fontSize: 16,
+                    fontSize: 14, // Reduced size
                     fontWeight: FontWeight.w400,
                   ),
+                  overflow: TextOverflow.ellipsis, // Add this
                 ),
               );
             }).toList(),
@@ -178,12 +180,14 @@ class TripCard extends StatelessWidget {
     return Text(
       title,
       overflow: TextOverflow.ellipsis,
+      maxLines: 1, // Add this to prevent text overflow
       style: theme.textTheme.bodyLarge,
     );
   }
 
   Widget _buildDateSection() {
     return Row(
+      mainAxisSize: MainAxisSize.min, // Add this to prevent row overflow
       children: [
         Icon(
           Icons.calendar_today_outlined,
@@ -191,9 +195,13 @@ class TripCard extends StatelessWidget {
           size: 16.h,
         ),
         SizedBox(width: 6.h),
-        Text(
-          dateRange,
-          style: theme.textTheme.bodySmall,
+        Flexible( // Wrap in Flexible to handle long text
+          child: Text(
+            dateRange,
+            style: theme.textTheme.bodySmall,
+            overflow: TextOverflow.ellipsis, // Add this
+            maxLines: 1, // Limit to one line
+          ),
         ),
       ],
     );
@@ -203,46 +211,53 @@ class TripCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildAvatarStack(),
-        Text(
-          "$unfinishedTasks unfinished tasks",
-          style: theme.textTheme.bodySmall,
+        // Wrap in Flexible to give it room to shrink if needed
+        Flexible(
+          child: _buildAvatarStack(),
+        ),
+        // Ensure this text can be smaller if needed
+        Flexible(
+          child: Text(
+            "$unfinishedTasks unfinished tasks",
+            style: theme.textTheme.bodySmall,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.end,
+          ),
         ),
       ],
     );
   }
 
   Widget _buildAvatarStack() {
-    const maxVisibleAvatars = 3;
+    const maxVisibleAvatars = 2; // Reduced from 3 to 2
     int extraAvatars = avatarUrls.length > maxVisibleAvatars
         ? avatarUrls.length - maxVisibleAvatars
         : 0;
 
     return SizedBox(
-      height: 32.h, // Increased height to match the image
-      width: avatarUrls.isEmpty ? 0 : 62.h,
+      height: 24.h, // Reduced height
+      width: avatarUrls.isEmpty ? 0 : 60.h, // Reduced width
       child: Stack(
-        alignment: Alignment.centerRight,
+        alignment: Alignment.centerLeft, // Changed to left alignment
         children: [
           for (int i = 0; i < min(maxVisibleAvatars, avatarUrls.length); i++)
             Positioned(
-              left: i * 12.h,
+              left: i * 12.h, // Less overlap
               child: CustomImageView(
                 imagePath: avatarUrls[i],
-                height: 24.h,
+                height: 24.h, // Smaller avatars
                 width: 24.h,
                 radius: BorderRadius.circular(12.h),
                 border: Border.all(
-                  color: Colors.black, // Dark border around avatar
+                  color: Colors.black,
                   width: 1.h,
                 ),
-                fit: BoxFit.cover, // Ensure proper image fit
-
+                fit: BoxFit.cover,
               ),
             ),
           if (extraAvatars > 0)
             Positioned(
-              right: 0,
+              left: min(maxVisibleAvatars, avatarUrls.length) * 12.h, // Position based on visible avatars
               child: Container(
                 height: 24.h,
                 width: 24.h,
@@ -258,9 +273,9 @@ class TripCard extends StatelessWidget {
                   child: Text(
                     "+$extraAvatars",
                     style: TextStyle(
-                      color: Color(0xFFFFC062), // Orange-yellow color from the image
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600, // Semi-bold
+                      color: Color(0xFFFFC062),
+                      fontSize: 10, // Smaller font size
+                      fontWeight: FontWeight.w600,
                       fontFamily: 'Inter',
                     ),
                   ),

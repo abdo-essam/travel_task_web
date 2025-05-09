@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../core/app_export.dart';
+import 'package:travel_task_web/presentation/web_trips_screen/widgets/WebTripCard.dart';
+import '../../core/utils/image_constant.dart';
+import 'widgets/app_header.dart';
 
 class WebTripsScreen extends StatefulWidget {
   const WebTripsScreen({super.key});
@@ -9,163 +11,29 @@ class WebTripsScreen extends StatefulWidget {
 }
 
 class _WebTripsScreenState extends State<WebTripsScreen> {
-  int _selectedNavIndex = 1; // Trips section selected by default
+  int _selectedNavIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Main content
+            // Header
+            AppHeader(
+              selectedIndex: _selectedNavIndex,
+              onNavItemTap: (index) {
+                setState(() {
+                  _selectedNavIndex = index;
+                });
+              },
+            ),
+
+            // Content
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Header
-                  _buildHeader(),
-                  // Content
-                  Expanded(
-                    child: _buildContent(context),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      height: 70,
-      decoration: const BoxDecoration(
-        color: Colors.black,
-        border: Border(
-          bottom: BorderSide(color: Color(0xFF262626), width: 1),
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Row(
-        children: [
-          // Logo on the left
-          CustomImageView(
-            imagePath: ImageConstant.imgLogoipsum3321,
-            height: 34,
-            width: 76,
-          ),
-
-          // Large spacer to push everything to the right
-          Spacer(),
-
-          // Navigation items now positioned on the right
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildNavItem('Items', _selectedNavIndex == 0, 0),
-              SizedBox(width: 32),
-              _buildNavItem('Pricing', _selectedNavIndex == 1, 1),
-              SizedBox(width: 32),
-              _buildNavItem('Info', _selectedNavIndex == 2, 2),
-              SizedBox(width: 32),
-              _buildNavItem('Tasks', _selectedNavIndex == 3, 3),
-              SizedBox(width: 32),
-              _buildNavItem('Analytics', _selectedNavIndex == 4, 4),
-            ],
-          ),
-
-          // Small spacer between nav items and icons
-          SizedBox(width: 32),
-
-          // Vertical separator line
-          Container(
-            height: 24,
-            width: 1,
-            color: Color(0xFF333333),
-          ),
-
-          // Right side icons
-          SizedBox(width: 32),
-          Icon(
-            Icons.settings_outlined,
-            color: Colors.white,
-            size: 22,
-          ),
-          SizedBox(width: 24),
-          Icon(
-            Icons.notifications_none_outlined,
-            color: Colors.white,
-            size: 22,
-          ),
-          SizedBox(width: 24),
-          // Vertical separator line
-          Container(
-            height: 24,
-            width: 1,
-            color: Color(0xFF333333),
-          ),
-          SizedBox(width: 24),
-          // Profile section
-          CircleAvatar(
-            radius: 16,
-            backgroundImage: AssetImage(ImageConstant.imgFrame77135),
-          ),
-          SizedBox(width: 8),
-          Text(
-            'John Doe',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontFamily: 'Inter',
-            ),
-          ),
-          SizedBox(width: 4),
-          Icon(
-            Icons.keyboard_arrow_down,
-            color: Colors.white,
-            size: 16,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem(String title, bool isSelected, int index) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          _selectedNavIndex = index;
-        });
-      },
-      hoverColor: Colors.transparent,
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      child: Container(
-        height: 70, // Full header height
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            // Text centered vertically
-            Text(
-              title,
-              style: TextStyle(
-                color: isSelected ? Colors.white : const Color(0xFF999999),
-                fontSize: 14,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-
-            // Orange indicator at the bottom
-            Positioned(
-              bottom: 0, // Exactly at the bottom
-              child: Container(
-                height: 2,
-                width: isSelected ? 40 : 0,
-                color: isSelected ? const Color(0xFFFFC268) : Colors.transparent,
-              ),
+              child: _buildContent(context),
             ),
           ],
         ),
@@ -175,257 +43,72 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
 
   Widget _buildContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.symmetric(horizontal: 80),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Title and add button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Items',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-
-              // Add button
-              ElevatedButton.icon(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.black,
-                  size: 16,
-                ),
-                label: const Text(
-                  'Add a New Item',
+          Padding(
+            padding: const EdgeInsets.only(top: 32, bottom: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Items',
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
+                    color: Colors.white,
+                    fontSize: 28,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFFC268),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-            ],
-          ),
 
-          const SizedBox(height: 24),
-
-          // Grid of trips
-          Expanded(
-            child: _buildSimpleGrid(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSimpleGrid() {
-    // Create a basic list of trip data
-    final trips = [
-      {
-        'title': 'Los Angeles Trip',
-        'image': 'assets/images/img_rectangle_1208.png'
-      },
-      {
-        'title': 'Chicago Skyline View',
-        'image': 'assets/images/img_rectangle_1208_182x342.png'
-      },
-      {
-        'title': 'Mountain Retreat',
-        'image': 'assets/images/img_rectangle_1208.png'
-      },
-      {
-        'title': 'City Explorer',
-        'image': 'assets/images/img_rectangle_1208_182x342.png'
-      },
-      {
-        'title': 'Countryside Escape',
-        'image': 'assets/images/img_rectangle_1208.png'
-      },
-      {
-        'title': 'Desert Adventure',
-        'image': 'assets/images/img_rectangle_1208_182x342.png'
-      },
-    ];
-
-    // Determine the number of columns based on screen width
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    int columns = 4;
-
-    if (screenWidth < 1200) {
-      columns = 3;
-    }
-    if (screenWidth < 900) {
-      columns = 2;
-    }
-    if (screenWidth < 600) {
-      columns = 1;
-    }
-
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: columns,
-        childAspectRatio: 1.1,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-      ),
-      itemCount: trips.length,
-      itemBuilder: (context, index) {
-        return _buildSimpleTripCard(
-          title: trips[index]['title'] ?? '',
-          imagePath: trips[index]['image'] ?? '',
-        );
-      },
-    );
-  }
-
-  Widget _buildSimpleTripCard(
-      {required String title, required String imagePath}) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF171717),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                ),
-                child: Image.asset(
-                  imagePath,
-                  height: 160,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                top: 8,
-                right: 8,
-                child: Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade600,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.more_horiz,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          // Content
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Status
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color(0xFFC25F30)),
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Pending Approval',
-                        style: TextStyle(
+                Row(
+                  children: [
+                    // Filter button
+                    Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF111111),
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.tune,
                           color: Colors.white,
-                          fontSize: 12,
-                          fontFamily: 'Inter',
+                          size: 20,
                         ),
                       ),
-                      SizedBox(width: 4),
-                      Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Colors.white,
-                        size: 16,
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                // Title
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontFamily: 'Inter',
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-
-                const SizedBox(height: 6),
-
-                // Date
-                const Row(
-                  children: [
-                    Icon(
-                      Icons.calendar_today_outlined,
-                      color: Color(0xFF999999),
-                      size: 14,
                     ),
-                    SizedBox(width: 6),
-                    Text(
-                      '5 Nights (Jan 16 - Jan 20, 2024)',
-                      style: TextStyle(
-                        color: Color(0xFF999999),
-                        fontSize: 12,
-                        fontFamily: 'Inter',
+
+                    const SizedBox(width: 16),
+
+                    // Add button
+                    ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.add,
+                        color: Colors.black,
+                        size: 20,
                       ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 12),
-                const Divider(color: Color(0xFF262626)),
-                const SizedBox(height: 12),
-
-                // Tasks
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      '4 unfinished tasks',
-                      style: TextStyle(
-                        color: Color(0xFF999999),
-                        fontSize: 12,
-                        fontFamily: 'Inter',
+                      label: const Text(
+                        'Add a New Item',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFFC268),
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        minimumSize: Size(170, 48),
                       ),
                     ),
                   ],
@@ -433,8 +116,139 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
               ],
             ),
           ),
+
+          // Grid of trips
+          Expanded(
+            child: _buildTripGrid(),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildTripGrid() {
+    final trips = [
+      {
+        'title': 'Item title',
+        'image': 'assets/images/img_rectangle_1208.png',
+        'dateRange': '5 Nights (Jan 16 - Jan 20, 2024)',
+        'unfinishedTasks': 4,
+        'avatars': [
+          ImageConstant.imgEllipse1054,
+          ImageConstant.imgEllipse1055,
+          ImageConstant.imgEllipse1056,
+        ]
+      },
+      {
+        'title': 'Long item title highlighted',
+        'image': 'assets/images/img_rectangle_1208_182x342.png',
+        'dateRange': '5 Nights (Jan 16 - Jan 20, 2024)',
+        'unfinishedTasks': 4,
+        'avatars': [
+          ImageConstant.imgEllipse1054,
+          ImageConstant.imgEllipse1055,
+        ]
+      },
+      {
+        'title': 'Item title',
+        'image': 'assets/images/img_rectangle_1208.png',
+        'dateRange': '5 Nights (Jan 16 - Jan 20, 2024)',
+        'unfinishedTasks': 4,
+        'avatars': [
+          ImageConstant.imgEllipse1054,
+          ImageConstant.imgEllipse1055,
+          ImageConstant.imgEllipse1056,
+        ]
+      },
+      {
+        'title': 'Item title',
+        'image': 'assets/images/img_rectangle_1208_182x342.png',
+        'dateRange': '5 Nights (Jan 16 - Jan 20, 2024)',
+        'unfinishedTasks': 4,
+        'avatars': [
+          ImageConstant.imgEllipse1054,
+          ImageConstant.imgEllipse1055,
+          ImageConstant.imgEllipse1056,
+        ]
+      },
+      {
+        'title': 'Item title',
+        'image': 'assets/images/img_rectangle_1208.png',
+        'dateRange': '5 Nights (Jan 16 - Jan 20, 2024)',
+        'unfinishedTasks': 4,
+        'avatars': [
+          ImageConstant.imgEllipse1054,
+          ImageConstant.imgEllipse1055,
+          ImageConstant.imgEllipse1056,
+        ]
+      },
+      {
+        'title': 'Item title',
+        'image': 'assets/images/img_rectangle_1208.png',
+        'dateRange': '5 Nights (Jan 16 - Jan 20, 2024)',
+        'unfinishedTasks': 4,
+        'avatars': [
+          ImageConstant.imgEllipse1054,
+          ImageConstant.imgEllipse1055,
+          ImageConstant.imgEllipse1056,
+        ]
+      },
+      {
+        'title': 'Item title',
+        'image': 'assets/images/img_rectangle_1208_182x342.png',
+        'dateRange': '5 Nights (Jan 16 - Jan 20, 2024)',
+        'unfinishedTasks': 4,
+        'avatars': [
+          ImageConstant.imgEllipse1054,
+          ImageConstant.imgEllipse1055,
+        ]
+      },
+      {
+        'title': 'Item title',
+        'image': 'assets/images/img_rectangle_1208.png',
+        'dateRange': '5 Nights (Jan 16 - Jan 20, 2024)',
+        'unfinishedTasks': 4,
+        'avatars': [
+          ImageConstant.imgEllipse1054,
+          ImageConstant.imgEllipse1055,
+          ImageConstant.imgEllipse1056,
+        ]
+      },
+    ];
+
+    // Determine number of columns based on screen width
+    double screenWidth = MediaQuery.of(context).size.width;
+    int columns = 4;
+
+    if (screenWidth < 1400) columns = 3;
+    if (screenWidth < 1100) columns = 2;
+    if (screenWidth < 700) columns = 1;
+
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: columns,
+        childAspectRatio: 0.85, // Slightly taller than wide for proper card proportions
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+      ),
+      padding: EdgeInsets.zero,
+      itemCount: trips.length,
+      itemBuilder: (context, index) {
+        final trip = trips[index];
+        return WebTripCard(
+          imageUrl: trip['image'] as String,
+          title: trip['title'] as String,
+          dateRange: trip['dateRange'] as String,
+          unfinishedTasks: trip['unfinishedTasks'] as int,
+          avatarUrls: (trip['avatars'] as List<String>),
+          onCardTap: () {
+            print('Tapped on ${trip['title']}');
+          },
+          onMoreTap: () {
+            print('More options for ${trip['title']}');
+          },
+        );
+      },
     );
   }
 }
