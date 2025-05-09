@@ -5,11 +5,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 extension ImageTypeExtension on String {
   ImageType get imageType {
-    if (this.startsWith('http') || this.startsWith('https')) {
+    if (startsWith('http') || startsWith('https')) {
       return ImageType.network;
-    } else if (this.endsWith('.svg')) {
+    } else if (endsWith('.svg')) {
       return ImageType.svg;
-    } else if (this.startsWith('file://')) {
+    } else if (startsWith('file://')) {
       return ImageType.file;
     } else {
       return ImageType.png;
@@ -20,7 +20,7 @@ extension ImageTypeExtension on String {
 enum ImageType { svg, png, network, file, unknown }
 
 class CustomImageView extends StatelessWidget {
-  CustomImageView({
+  const CustomImageView({super.key,
     this.imagePath,
     this.height,
     this.width,
@@ -108,9 +108,9 @@ class CustomImageView extends StatelessWidget {
               width: width,
               fit: fit ?? BoxFit.contain,
               colorFilter:
-                  this.color != null
+                  color != null
                       ? ColorFilter.mode(
-                        this.color ?? Colors.transparent,
+                        color ?? Colors.transparent,
                         BlendMode.srcIn,
                       )
                       : null,

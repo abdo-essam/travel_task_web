@@ -9,7 +9,6 @@ class WebTripsScreen extends StatefulWidget {
 }
 
 class _WebTripsScreenState extends State<WebTripsScreen> {
-  bool _isDrawerOpen = false;
   int _selectedNavIndex = 1; // Trips section selected by default
 
   @override

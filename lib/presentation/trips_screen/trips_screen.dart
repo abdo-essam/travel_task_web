@@ -19,13 +19,13 @@ class TripsScreen extends StatelessWidget {
       appBar: _buildHeader(context),
       body: Container(
         width: double.maxFinite,
-        padding: EdgeInsets.symmetric(horizontal: 12.h),
+        padding: EdgeInsets.symmetric(horizontal: 16.h), // Updated from 12.h to 16.h
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             SizedBox(height: 16.h),
             _buildItemsRow(context),
-            SizedBox(height: 18.h),
+            SizedBox(height: 16.h), // Updated from 18.h to 16.h
             _buildTripsList(context),
           ],
         ),
@@ -36,39 +36,52 @@ class TripsScreen extends StatelessWidget {
   /// Section Widget
   PreferredSizeWidget _buildHeader(BuildContext context) {
     return CustomAppBar(
-      leadingWidth: 40.h,
+      height: 72.h,
+      leadingWidth: 56.h,
       leading: AppbarLeadingImage(
-        imagePath: ImageConstant.imgLinearInterface,
+        imagePath: ImageConstant.imgLinearInterface, // Menu/hamburger icon
         margin: EdgeInsets.only(left: 16.h),
       ),
-      title: SizedBox(
-        width: double.maxFinite,
-        child: AppbarTitleImage(
-          imagePath: ImageConstant.imgLogoipsum3321,
-          height: 40.h,
-          width: 82.h,
-          margin: EdgeInsets.only(left: 16.h),
-        ),
+      title: AppbarTitleImage(
+        imagePath: ImageConstant.imgLogoipsum3321, // Logo image
+        height: 40.h,
+        width: 110.h,
+        margin: EdgeInsets.only(left: 16.h),
       ),
+      centerTitle: false,
       actions: [
-        AppbarTrailingImage(imagePath: ImageConstant.imgSearch),
-        AppbarTrailingImage(
-          imagePath: ImageConstant.imgIcons,
-          margin: EdgeInsets.only(left: 12.h),
-        ),
         Padding(
-          padding: EdgeInsets.only(left: 12.h),
-          child: VerticalDivider(
-            width: 1.h,
-            thickness: 1.h,
-            color: appTheme.gray800,
+          padding: EdgeInsets.only(right: 16.h),
+          child: Row(
+            children: [
+              AppbarTrailingImage(
+                imagePath: ImageConstant.imgSearch, // Settings gear icon
+                height: 24.h,
+                width: 24.h,
+              ),
+              SizedBox(width: 16.h),
+              AppbarTrailingImage(
+                imagePath: ImageConstant.imgIcons, // Bell/notification icon
+                height: 24.h,
+                width: 24.h,
+              ),
+              SizedBox(width: 16.h),
+              // Vertical divider
+              Container(
+                height: 32.h,
+                width: 1.h,
+                color: appTheme.gray800,
+              ),
+              SizedBox(width: 16.h),
+              // Profile image
+              AppbarTrailingImageOne(
+                imagePath: ImageConstant.imgFrame77135, // Profile image
+                height: 36.h,
+                width: 36.h,
+                radius: BorderRadius.circular(18.h),
+              ),
+            ],
           ),
-        ),
-        AppbarTrailingImageOne(
-          imagePath: ImageConstant.imgFrame77135,
-          height: 32.h,
-          width: 32.h,
-          margin: EdgeInsets.only(left: 11.h, right: 15.h),
         ),
       ],
       styleType: Style.bgOutlineGray900,
@@ -79,18 +92,33 @@ class TripsScreen extends StatelessWidget {
   Widget _buildItemsRow(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      margin: EdgeInsets.symmetric(horizontal: 2.h),
+      margin: EdgeInsets.zero,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Items", style: theme.textTheme.headlineSmall),
-          CustomIconButton(
-            height: 40.h,
-            width: 40.h,
-            padding: EdgeInsets.all(10.h),
-            decoration: IconButtonStyleHelper.none,
-            child: CustomImageView(
-              imagePath: ImageConstant.imgLinearInterfaceWhiteA700,
+          Text(
+            "Items",
+            style: TextStyle(
+              fontSize: 38,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+              fontFamily: 'Inter',
+            ),
+          ),
+          Container(
+            height: 48.h,
+            width: 48.h,
+            decoration: BoxDecoration(
+              color: Color(0xFF1E1E1E),
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: CustomImageView(
+                imagePath: ImageConstant.imgLinearInterfaceWhiteA700,
+                height: 24.h,
+                width: 24.h,
+                color: Colors.white,
+              ),
             ),
           ),
         ],
@@ -105,7 +133,7 @@ class TripsScreen extends StatelessWidget {
 
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.only(right: 6.h),
+        padding: EdgeInsets.zero, // Updated from only(right: 6.h) to zero
         child: ListView.separated(
           padding: EdgeInsets.zero,
           physics: BouncingScrollPhysics(),
@@ -148,11 +176,12 @@ class TripsScreen extends StatelessWidget {
       ),
       builder: (context) {
         return Container(
-          padding: EdgeInsets.symmetric(vertical: 20.h),
+          padding: EdgeInsets.symmetric(vertical: 16.h), // Updated from 20.h to 16.h
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.h), // Added consistent padding
                 leading: Icon(Icons.edit, color: appTheme.whiteA700),
                 title: Text('Edit Trip', style: theme.textTheme.bodyMedium),
                 onTap: () {
@@ -161,6 +190,7 @@ class TripsScreen extends StatelessWidget {
                 },
               ),
               ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.h), // Added consistent padding
                 leading: Icon(Icons.share, color: appTheme.whiteA700),
                 title: Text('Share Trip', style: theme.textTheme.bodyMedium),
                 onTap: () {
@@ -169,6 +199,7 @@ class TripsScreen extends StatelessWidget {
                 },
               ),
               ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.h), // Added consistent padding
                 leading: Icon(Icons.delete, color: Colors.red),
                 title: Text('Delete Trip', style: TextStyle(
                   color: Colors.red,

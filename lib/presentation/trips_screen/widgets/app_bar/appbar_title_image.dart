@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_task_web/core/app_export.dart';
 
-import '../../../../widgets/custom_image_view.dart';
 
 class AppbarTitleImage extends StatelessWidget {
   const AppbarTitleImage({
