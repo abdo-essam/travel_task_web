@@ -41,7 +41,7 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
   Widget _buildHeader() {
     return Container(
       height: 76,
-      padding: const EdgeInsets.symmetric(horizontal: 32), // Use proper padding
+      padding: const EdgeInsets.symmetric(horizontal: 32),
       decoration: const BoxDecoration(
         color: Colors.black,
         border: Border(
@@ -49,6 +49,8 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
         ),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center, // Ensure vertical center alignment
         children: [
           // Logo
           CustomImageView(
@@ -57,44 +59,40 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
             width: 82,
           ),
 
-          const Spacer(),
-
-          // Navigation with orange underline for selected item
-          Container(
-            color: Colors.pink,
-            child: Row(
-              children: [
-                _buildNavItem('Items', _selectedNavIndex == 0, 0),
-                const SizedBox(width: 28),
-                _buildNavItem('Pricing', _selectedNavIndex == 1, 1),
-                const SizedBox(width: 28),
-                _buildNavItem('Info', _selectedNavIndex == 2, 2),
-                const SizedBox(width: 28),
-                _buildNavItem('Tasks', _selectedNavIndex == 3, 3),
-                const SizedBox(width: 28),
-                _buildNavItem('Analytics', _selectedNavIndex == 4, 4),
-              ],
-            ),
-          ),
-          const SizedBox(width: 28),
-
-          // Right icons with proper spacing - using MaterialIcons directly since SVG paths might be wrong
-          Icon(
-            Icons.settings_outlined,
-            color: Colors.white,
-            size: 20,
-          ),
-          const SizedBox(width: 18),
-          Icon(
-            Icons.notifications_none_outlined,
-            color: Colors.white,
-            size: 20,
-          ),
-          const SizedBox(width: 18),
-
-          // Profile
+          // Nav items - horizontally aligned
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center, // Ensure vertical center alignment
             children: [
+              _buildNavItem('Items', _selectedNavIndex == 0, 0),
+              const SizedBox(width: 28),
+              _buildNavItem('Pricing', _selectedNavIndex == 1, 1),
+              const SizedBox(width: 28),
+              _buildNavItem('Info', _selectedNavIndex == 2, 2),
+              const SizedBox(width: 28),
+              _buildNavItem('Tasks', _selectedNavIndex == 3, 3),
+              const SizedBox(width: 28),
+              _buildNavItem('Analytics', _selectedNavIndex == 4, 4),
+            ],
+          ),
+
+          // Right icons
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center, // Ensure vertical center alignment
+            children: [
+              Icon(
+                Icons.settings_outlined,
+                color: Colors.white,
+                size: 20,
+              ),
+              const SizedBox(width: 18),
+              Icon(
+                Icons.notifications_none_outlined,
+                color: Colors.white,
+                size: 20,
+              ),
+              const SizedBox(width: 18),
               CircleAvatar(
                 radius: 14,
                 backgroundImage: AssetImage(ImageConstant.imgFrame77135),
@@ -122,7 +120,7 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
     );
   }
 
-// Helper method to build clickable navigation items with correct underline position
+// Updated nav item to have the text aligned on the same line
   Widget _buildNavItem(String title, bool isSelected, int index) {
     return InkWell(
       onTap: () {
@@ -131,32 +129,33 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
         });
       },
       hoverColor: Colors.transparent,
-      // No hover color
       splashColor: Colors.transparent,
-      // No splash effect
       highlightColor: Colors.transparent,
-      // No highlight effect
-      child: SizedBox(
-        child: Column(
+      child: Container(
+        height: 76, // Full height of header
+        child: Stack(
+          alignment: Alignment.bottomCenter,
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                color: isSelected ? Colors.white : const Color(0xFF999999),
-                fontSize: 14,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
+            // Text centered vertically
+            Center(
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: isSelected ? Colors.white : const Color(0xFF999999),
+                  fontSize: 14,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
-            // Using Spacer to push the underline to the bottom
-            Spacer(),
-            // Orange underline at the bottom
-            Container(
-              height: 2,
-              width: isSelected ? 40 : 0, // Only show when selected
-              decoration: BoxDecoration(
-                color: isSelected ? const Color(0xFFFFC268) : Colors
-                    .transparent,
+
+            // Orange indicator at the bottom
+            Positioned(
+              bottom: 0, // Exactly at the bottom
+              child: Container(
+                height: 2,
+                width: isSelected ? 40 : 0,
+                color: isSelected ? const Color(0xFFFFC268) : Colors.transparent,
               ),
             ),
           ],
