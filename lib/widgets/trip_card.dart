@@ -109,42 +109,68 @@ class TripCard extends StatelessWidget {
     );
   }
 
+
   Widget _buildStatusDropdown() {
-    return CustomDropDown(
-      width: 156.h,
-      icon: SvgPicture.asset(
-        ImageConstant.imgLinearArrowChevrondown,
-        height: 16.h,
-        width: 16.h,
-        color: appTheme.whiteA700,
+    return Container(
+      width: 160.h,  // Wider to match your design
+      height: 36.h,  // Taller height
+      decoration: BoxDecoration(
+        color: Color(0xFF1A1A1A),  // Dark background with slight transparency
+        borderRadius: BorderRadius.circular(24.h),  // Very rounded corners (pill shape)
+        border: Border.all(
+          color: Color(0xFFC25F30),  // Orange border color
+          width: 1,  // Visible border
+        ),
       ),
-      iconSize: 16.h,
-      hintText: "Pending Approval",
-      hintStyle: TextStyle(
-        color: appTheme.whiteA700,
-        fontFamily: 'Inter',
-        fontSize: 14,
-        fontWeight: FontWeight.w400, // Regular
-        height: 1.57, // Line height of 22 ÷ 14
+      child: DropdownButtonHideUnderline(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.h),  // More horizontal padding
+          child: DropdownButton<String>(
+            icon: SvgPicture.asset(
+              ImageConstant.imgLinearArrowChevrondown,
+              height: 20.h,
+              width: 20.h,
+              color: appTheme.whiteA700,
+            ),
+            dropdownColor: Color(0xFF1A1A1A),  // Match the background
+            borderRadius: BorderRadius.circular(16.h),
+            style: TextStyle(
+              color: appTheme.whiteA700,
+              fontFamily: 'Inter',
+              fontSize: 16,  // Larger text size
+              fontWeight: FontWeight.w400,  // Medium weight
+            ),
+            isExpanded: true,
+            isDense: true,
+            hint: Text(
+              "Pending Approval",
+              style: TextStyle(
+                color: appTheme.whiteA700,
+                fontFamily: 'Inter',
+                fontSize: 16,  // Larger text
+                fontWeight: FontWeight.w400,  // Medium weight
+              ),
+            ),
+            items: dropdownItemList.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    color: appTheme.whiteA700,
+                    fontFamily: 'Inter',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              // Update your state here
+            },
+          ),
+        ),
       ),
-      textStyle: TextStyle(
-        color: appTheme.whiteA700,
-        fontFamily: 'Inter',
-        fontSize: 14,
-        fontWeight: FontWeight.w400, // Regular
-        height: 1.57, // Line height of 22 ÷ 14
-      ),
-      items: dropdownItemList,
-      contentPadding: EdgeInsets.symmetric(
-        horizontal: 12.h,
-        vertical: 4.h,
-      ),
-      fillColor: Colors.black.withOpacity(0.4),
-      borderDecoration: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14.h),
-        borderSide: BorderSide(color: Color(0xFFC25F30), width: 0.5), // Using the exact color code from the design
-      ),
-      onChanged: (value) {},
     );
   }
 
@@ -193,7 +219,7 @@ class TripCard extends StatelessWidget {
         : 0;
 
     return SizedBox(
-      height: 24.h,
+      height: 32.h, // Increased height to match the image
       width: avatarUrls.isEmpty ? 0 : 62.h,
       child: Stack(
         alignment: Alignment.centerRight,
@@ -206,6 +232,12 @@ class TripCard extends StatelessWidget {
                 height: 24.h,
                 width: 24.h,
                 radius: BorderRadius.circular(12.h),
+                border: Border.all(
+                  color: Colors.black, // Dark border around avatar
+                  width: 1.h,
+                ),
+                fit: BoxFit.cover, // Ensure proper image fit
+
               ),
             ),
           if (extraAvatars > 0)
@@ -225,7 +257,12 @@ class TripCard extends StatelessWidget {
                 child: Center(
                   child: Text(
                     "+$extraAvatars",
-                    style: theme.textTheme.titleSmall,
+                    style: TextStyle(
+                      color: Color(0xFFFFC062), // Orange-yellow color from the image
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600, // Semi-bold
+                      fontFamily: 'Inter',
+                    ),
                   ),
                 ),
               ),
