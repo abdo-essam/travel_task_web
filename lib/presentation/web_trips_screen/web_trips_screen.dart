@@ -32,9 +32,7 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
             ),
 
             // Content
-            Expanded(
-              child: _buildContent(context),
-            ),
+            Expanded(child: _buildContent(context)),
           ],
         ),
       ),
@@ -75,11 +73,7 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
                       ),
                       child: IconButton(
                         onPressed: () {},
-                        icon: Icon(
-                          Icons.tune,
-                          color: Colors.white,
-                          size: 20,
-                        ),
+                        icon: Icon(Icons.tune, color: Colors.white, size: 20),
                       ),
                     ),
 
@@ -104,7 +98,10 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFFFC268),
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24),
                         ),
@@ -118,9 +115,7 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
           ),
 
           // Grid of trips
-          Expanded(
-            child: _buildTripGrid(),
-          ),
+          Expanded(child: _buildTripGrid()),
         ],
       ),
     );
@@ -218,20 +213,22 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
 
     // Determine number of columns based on screen width
     double screenWidth = MediaQuery.of(context).size.width;
-    int columns = 4;
+    int columns = 5;
 
     if (screenWidth < 1400) columns = 3;
     if (screenWidth < 1100) columns = 2;
     if (screenWidth < 700) columns = 1;
 
+    // Use custom size calculations for fixed size cards
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: columns,
-        childAspectRatio: 0.85, // Slightly taller than wide for proper card proportions
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
+        mainAxisSpacing: 4,
+        crossAxisSpacing: 8,
+        // Rather than using a fixed childAspectRatio, calculate it based on the card dimensions
+        childAspectRatio: 243 / 322, // Width / Height of the card
       ),
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.all(0),
       itemCount: trips.length,
       itemBuilder: (context, index) {
         final trip = trips[index];

@@ -22,164 +22,178 @@ class WebTripCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onCardTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFF111111),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Image section with gradient overlay and more button
-            Stack(
-              children: [
-                // Image
-                Image.asset(
-                  imageUrl,
-                  height: 220,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-
-                // Gradient overlay
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.transparent,
-                          Colors.black.withOpacity(0.7),
-                        ],
-                        stops: const [0.6, 1.0],
-                      ),
-                    ),
-                  ),
-                ),
-
-                // More button
-                Positioned(
-                  top: 12,
-                  right: 12,
-                  child: InkWell(
-                    onTap: onMoreTap,
-                    child: Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF333333),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.more_horiz,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                    ),
-                  ),
-                ),
-
-                // Status pill - positioned at bottom of image
-                Positioned(
-                  bottom: 16,
-                  left: 16,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xFFC25F30)),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
-                          "Pending Approval",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        Icon(
-                          Icons.keyboard_arrow_down,
-                          color: Colors.white,
-                          size: 16,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            // Content area
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return SizedBox(
+      width: 243, // Fixed width as requested
+      child: InkWell(
+        onTap: onCardTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF111111),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min, // Make column wrap content
+            children: [
+              // Image section with gradient overlay and more button
+              Stack(
                 children: [
-                  // Title
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
+                  // Image
+                  Image.asset(
+                    imageUrl,
+                    height: 160, // Reduced height of image
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+
+                  // Gradient overlay
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.5),
+                            Colors.black.withOpacity(0.9),
+                          ],
+                          stops: const [0.4, 0.75, 1.0],
+                        ),
+                      ),
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
 
-                  const SizedBox(height: 8),
-
-                  // Date range
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.calendar_today_outlined,
-                        color: const Color(0xFF999999),
-                        size: 14,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        dateRange,
-                        style: const TextStyle(
-                          color: Color(0xFF999999),
-                          fontSize: 12,
-                          fontFamily: 'Inter',
+                  // More button
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: InkWell(
+                      onTap: onMoreTap,
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF333333),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.more_horiz,
+                          color: Colors.white,
+                          size: 18,
                         ),
                       ),
-                    ],
+                    ),
                   ),
 
-                  const SizedBox(height: 16),
-
-                  // Avatar stack and tasks count
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildAvatarStack(),
-                      Text(
-                        "$unfinishedTasks unfinished tasks",
-                        style: const TextStyle(
-                          color: Color(0xFF999999),
-                          fontSize: 12,
-                          fontFamily: 'Inter',
-                        ),
+                  // Status pill
+                  Positioned(
+                    bottom: 16,
+                    left: 16,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xFFC25F30)),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-                    ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "Pending Approval",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Icon(
+                            Icons.keyboard_arrow_down,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+
+              // Content area
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Title
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    // Date range
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.calendar_today_outlined,
+                          color: const Color(0xFF999999),
+                          size: 14,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            dateRange,
+                            style: const TextStyle(
+                              color: Color(0xFF999999),
+                              fontSize: 12,
+                              fontFamily: 'Inter',
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // Avatar stack and tasks count
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildAvatarStack(),
+                        Flexible(
+                          child: Text(
+                            "$unfinishedTasks unfinished tasks",
+                            style: const TextStyle(
+                              color: Color(0xFF999999),
+                              fontSize: 12,
+                              fontFamily: 'Inter',
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -244,7 +258,7 @@ class WebTripCard extends StatelessWidget {
       );
     }
 
-    // Width depends on number of avatars shown (with overlap)
+    // Width calculation for the stack
     double stackWidth = avatarUrls.length <= maxDisplayedAvatars
         ? (avatarUrls.length - 1) * avatarOffset + avatarSize
         : 2 * avatarOffset + avatarSize;
