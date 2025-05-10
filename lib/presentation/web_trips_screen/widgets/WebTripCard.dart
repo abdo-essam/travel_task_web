@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:travel_task_web/core/app_export.dart';
 
-
 class WebTripCard extends StatelessWidget {
   final String imageUrl;
   final String title;
@@ -26,7 +25,8 @@ class WebTripCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 243, // Fixed width as requested
+      width: 243, // Fixed width
+      height: 322, // Fixed height to match aspect ratio used in grid
       child: InkWell(
         onTap: onCardTap,
         borderRadius: BorderRadius.circular(8),
@@ -38,15 +38,14 @@ class WebTripCard extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min, // Make column wrap content
             children: [
               // Image section with gradient overlay and more button
               Stack(
                 children: [
-                  // Image
+                  // Image - reduced height to fit in card
                   Image.asset(
                     imageUrl,
-                    height: 250 ,
+                    height: 180,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
@@ -69,7 +68,7 @@ class WebTripCard extends StatelessWidget {
                     ),
                   ),
 
-                  // More button
+                  // More button - simplified
                   Positioned(
                     top: 12,
                     right: 12,
@@ -82,10 +81,10 @@ class WebTripCard extends StatelessWidget {
                           color: const Color(0xFF333333),
                           shape: BoxShape.circle,
                         ),
-                        child: SvgPicture.asset(
-                          ImageConstant.imgMore,
-                          height: 32.h,
-                          width: 32.h,
+                        child: Icon(
+                          Icons.more_horiz,
+                          color: Colors.white,
+                          size: 18,
                         ),
                       ),
                     ),
@@ -126,73 +125,76 @@ class WebTripCard extends StatelessWidget {
                 ],
               ),
 
-              // Content area
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Title
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w500,
+              // Content area - using Expanded to take remaining space
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Title
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
 
-                    const SizedBox(height: 8),
+                      const SizedBox(height: 8),
 
-                    // Date range
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.calendar_today_outlined,
-                          color: const Color(0xFF999999),
-                          size: 14,
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            dateRange,
-                            style: const TextStyle(
-                              color: Color(0xFF999999),
-                              fontSize: 12,
-                              fontFamily: 'Inter',
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                      // Date range
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.calendar_today_outlined,
+                            color: const Color(0xFF999999),
+                            size: 14,
                           ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    // Avatar stack and tasks count
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildAvatarStack(),
-                        Flexible(
-                          child: Text(
-                            "$unfinishedTasks unfinished tasks",
-                            style: const TextStyle(
-                              color: Color(0xFF999999),
-                              fontSize: 12,
-                              fontFamily: 'Inter',
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              dateRange,
+                              style: const TextStyle(
+                                color: Color(0xFF999999),
+                                fontSize: 12,
+                                fontFamily: 'Inter',
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+
+                      // Push avatar stack and task count to bottom using Spacer
+                      Spacer(),
+
+                      // Avatar stack and tasks count
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildAvatarStack(),
+                          Flexible(
+                            child: Text(
+                              "$unfinishedTasks unfinished tasks",
+                              style: const TextStyle(
+                                color: Color(0xFF999999),
+                                fontSize: 12,
+                                fontFamily: 'Inter',
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

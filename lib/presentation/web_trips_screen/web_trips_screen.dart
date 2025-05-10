@@ -219,13 +219,12 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
     if (screenWidth < 1100) columns = 2;
     if (screenWidth < 700) columns = 1;
 
-    // Use custom size calculations for fixed size cards
+    // Use a grid with fixed aspect ratio
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: columns,
-        mainAxisSpacing: 16,
-        crossAxisSpacing: 16,
-        // Rather than using a fixed childAspectRatio, calculate it based on the card dimensions
+        mainAxisSpacing: 24,
+        crossAxisSpacing: 24,
         childAspectRatio: 243 / 322, // Width / Height of the card
       ),
       padding: const EdgeInsets.all(0),
