@@ -95,7 +95,7 @@ class TripsScreen extends StatelessWidget {
           Text(
             "Items",
             style: TextStyle(
-              fontSize: 38,
+              fontSize: 24,
               fontWeight: FontWeight.w500,
               color: Colors.white,
               fontFamily: 'Inter',
