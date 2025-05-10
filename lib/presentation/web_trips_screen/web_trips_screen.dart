@@ -132,6 +132,11 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
           ImageConstant.imgEllipse1054,
           ImageConstant.imgEllipse1055,
           ImageConstant.imgEllipse1056,
+          ImageConstant.imgEllipse1054,
+          ImageConstant.imgEllipse1055,
+          ImageConstant.imgEllipse1056,
+          ImageConstant.imgEllipse1054,
+          ImageConstant.imgEllipse1055,
         ]
       },
       {
@@ -153,6 +158,10 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
           ImageConstant.imgEllipse1054,
           ImageConstant.imgEllipse1055,
           ImageConstant.imgEllipse1056,
+          ImageConstant.imgEllipse1054,
+          ImageConstant.imgEllipse1056,
+          ImageConstant.imgEllipse1054,
+          ImageConstant.imgEllipse1055,
         ]
       },
       {
@@ -163,6 +172,8 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
         'avatars': [
           ImageConstant.imgEllipse1054,
           ImageConstant.imgEllipse1055,
+          ImageConstant.imgEllipse1055,
+          ImageConstant.imgEllipse1056,
           ImageConstant.imgEllipse1056,
         ]
       },
@@ -174,6 +185,9 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
         'avatars': [
           ImageConstant.imgEllipse1054,
           ImageConstant.imgEllipse1055,
+          ImageConstant.imgEllipse1055,
+          ImageConstant.imgEllipse1055,
+          ImageConstant.imgEllipse1056,
           ImageConstant.imgEllipse1056,
         ]
       },

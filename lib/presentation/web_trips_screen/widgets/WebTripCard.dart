@@ -174,6 +174,13 @@ class WebTripCard extends StatelessWidget {
                       // Push avatar stack and task count to bottom using Spacer
                       Spacer(),
 
+                      // Line divider before avatar section
+                      Container(
+                        height: 1,
+                        color: Color(0xFF333333),
+                        margin: EdgeInsets.only(bottom: 16),
+                      ),
+
                       // Avatar stack and tasks count
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
