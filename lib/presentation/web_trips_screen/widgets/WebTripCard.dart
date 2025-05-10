@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:travel_task_web/core/app_export.dart';
+
 
 class WebTripCard extends StatelessWidget {
   final String imageUrl;
@@ -79,10 +82,10 @@ class WebTripCard extends StatelessWidget {
                           color: const Color(0xFF333333),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
-                          Icons.more_horiz,
-                          color: Colors.white,
-                          size: 18,
+                        child: SvgPicture.asset(
+                          ImageConstant.imgMore,
+                          height: 32.h,
+                          width: 32.h,
                         ),
                       ),
                     ),
