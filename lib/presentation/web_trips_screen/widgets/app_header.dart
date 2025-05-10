@@ -18,9 +18,7 @@ class AppHeader extends StatelessWidget {
       height: 76,
       decoration: const BoxDecoration(
         color: Colors.black,
-        border: Border(
-          bottom: BorderSide(color: Color(0xFF262626), width: 1),
-        ),
+        border: Border(bottom: BorderSide(color: Color(0xFF262626), width: 1)),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 80),
       child: Row(
@@ -55,32 +53,24 @@ class AppHeader extends StatelessWidget {
           SizedBox(width: 32),
 
           // Vertical separator line
-          Container(
-            height: 24,
-            width: 1,
-            color: Color(0xFF333333),
-          ),
+          Container(height: 24, width: 1, color: Color(0xFF333333)),
 
           // Right side icons
           SizedBox(width: 32),
-          Icon(
-            Icons.settings_outlined,
+          IconButton(
+            onPressed: () {},
             color: Colors.white,
-            size: 22,
+            icon: Icon(Icons.settings_outlined),
           ),
           SizedBox(width: 24),
-          Icon(
-            Icons.notifications_none_outlined,
+          IconButton(
+            onPressed: () {},
             color: Colors.white,
-            size: 22,
+            icon: Icon(Icons.notifications_none_outlined),
           ),
           SizedBox(width: 24),
           // Vertical separator line
-          Container(
-            height: 24,
-            width: 1,
-            color: Color(0xFF333333),
-          ),
+          Container(height: 24, width: 1, color: Color(0xFF333333)),
           SizedBox(width: 24),
           // Profile section
           CircleAvatar(
@@ -97,11 +87,7 @@ class AppHeader extends StatelessWidget {
             ),
           ),
           SizedBox(width: 4),
-          Icon(
-            Icons.keyboard_arrow_down,
-            color: Colors.white,
-            size: 16,
-          ),
+          Icon(Icons.keyboard_arrow_down, color: Colors.white, size: 16),
         ],
       ),
     );
@@ -135,7 +121,8 @@ class AppHeader extends StatelessWidget {
               child: Container(
                 height: 2,
                 width: isSelected ? 40 : 0,
-                color: isSelected ? const Color(0xFFFFC268) : Colors.transparent,
+                color:
+                    isSelected ? const Color(0xFFFFC268) : Colors.transparent,
               ),
             ),
           ],

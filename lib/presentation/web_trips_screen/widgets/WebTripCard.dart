@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:travel_task_web/core/app_export.dart';
 
 class WebTripCard extends StatelessWidget {
   final String imageUrl;
@@ -125,78 +123,89 @@ class WebTripCard extends StatelessWidget {
                 ],
               ),
 
-              // Content area - using Expanded to take remaining space
+              // Content area with proper spacing
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Title
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      // Date range
-                      Row(
+                      // Top content: Title and date
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(
-                            Icons.calendar_today_outlined,
-                            color: const Color(0xFF999999),
-                            size: 14,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              dateRange,
-                              style: const TextStyle(
-                                color: Color(0xFF999999),
-                                fontSize: 12,
-                                fontFamily: 'Inter',
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                          // Title
+                          Text(
+                            title,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+
+                          const SizedBox(height: 8),
+
+                          // Date range
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_today_outlined,
+                                color: const Color(0xFF999999),
+                                size: 14,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  dateRange,
+                                  style: const TextStyle(
+                                    color: Color(0xFF999999),
+                                    fontSize: 12,
+                                    fontFamily: 'Inter',
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
 
-                      // Push avatar stack and task count to bottom using Spacer
+                      // Spacer to push footer to bottom
                       Spacer(),
 
-                      // Line divider before avatar section
-                      Container(
-                        height: 1,
-                        color: Color(0xFF333333),
-                        margin: EdgeInsets.only(bottom: 16),
-                      ),
-
-                      // Avatar stack and tasks count
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // Footer: Line divider and avatar stack
+                      Column(
                         children: [
-                          _buildAvatarStack(),
-                          Flexible(
-                            child: Text(
-                              "$unfinishedTasks unfinished tasks",
-                              style: const TextStyle(
-                                color: Color(0xFF999999),
-                                fontSize: 12,
-                                fontFamily: 'Inter',
+                          // Line divider
+                          Container(
+                            height: 1,
+                            color: Color(0xFF333333),
+                            margin: EdgeInsets.only(bottom: 16),
+                          ),
+
+                          // Avatar stack and tasks count
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _buildAvatarStack(),
+                              Flexible(
+                                child: Text(
+                                  "$unfinishedTasks unfinished tasks",
+                                  style: const TextStyle(
+                                    color: Color(0xFF999999),
+                                    fontSize: 12,
+                                    fontFamily: 'Inter',
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            ],
                           ),
                         ],
                       ),
