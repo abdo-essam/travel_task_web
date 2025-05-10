@@ -96,13 +96,13 @@ class _TripsScreenState extends State<TripsScreen> {
         ),
       ),
       actions: [
-        AppbarTrailingImage(imagePath: ImageConstant.imgSearch),
+        AppbarTrailingImage(imagePath: ImageConstant.imgSettings),
         AppbarTrailingImage(
-          imagePath: ImageConstant.imgIcons,
+          imagePath: ImageConstant.imgNotification,
           margin: EdgeInsets.only(left: 12.h),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 12.h), // Vertical padding as requested
+          padding: EdgeInsets.fromLTRB(12, 32, 0, 32),
           child: VerticalDivider(
             width: 1.h,
             thickness: 1.h,

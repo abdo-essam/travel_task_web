@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../core/app_export.dart';
 import '../presentation/trips_screen/widgets/custom_icon_button.dart';
+import 'custom_drop_down.dart';
 
 class TripCard extends StatelessWidget {
   final String? imageUrl;
@@ -111,68 +112,35 @@ class TripCard extends StatelessWidget {
   }
 
   Widget _buildStatusDropdown() {
-    return Container(
-      width: 150.h,
-      height: 36.h,
-      decoration: BoxDecoration(
-        color: Color(0xFF1A1A1A),
+    return CustomDropDown(
+      width: 158.h,
+      icon: Container(
+        margin: EdgeInsets.only(left: 6.h),
+        child: Icon(
+          Icons.keyboard_arrow_down,
+          color: appTheme.whiteA700,
+          size: 16.h,
+        ),
+      ),
+      iconSize: 16.h,
+      hintText: "Pending Approval",
+      items: dropdownItemList,
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: 12.h,
+        vertical: 4.h,
+      ),
+      // Use OutlineInputBorder instead of BoxDecoration
+      borderDecoration: OutlineInputBorder(
         borderRadius: BorderRadius.circular(24.h),
-        border: Border.all(
+        borderSide: BorderSide(
           color: Color(0xFFC25F30),
           width: 1,
         ),
       ),
-      child: DropdownButtonHideUnderline(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.h),
-          child: DropdownButton<String>(
-            icon: SvgPicture.asset(
-              ImageConstant.imgLinearArrowChevrondown,
-              height: 16.h, // Reduced size
-              width: 16.h,  // Reduced size
-              color: appTheme.whiteA700,
-            ),
-            dropdownColor: Color(0xFF1A1A1A),
-            borderRadius: BorderRadius.circular(16.h),
-            style: TextStyle(
-              color: appTheme.whiteA700,
-              fontFamily: 'Inter',
-              fontSize: 14, // Reduced size
-              fontWeight: FontWeight.w400,
-            ),
-            isExpanded: true,
-            isDense: true,
-            hint: Text(
-              "Pending Approval",
-              style: TextStyle(
-                color: appTheme.whiteA700,
-                fontFamily: 'Inter',
-                fontSize: 14, // Reduced size
-                fontWeight: FontWeight.w400,
-              ),
-              overflow: TextOverflow.ellipsis, // Add this
-            ),
-            items: dropdownItemList.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(
-                  value,
-                  style: TextStyle(
-                    color: appTheme.whiteA700,
-                    fontFamily: 'Inter',
-                    fontSize: 14, // Reduced size
-                    fontWeight: FontWeight.w400,
-                  ),
-                  overflow: TextOverflow.ellipsis, // Add this
-                ),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              // Update your state here
-            },
-          ),
-        ),
-      ),
+      fillColor: Color(0xFF1A1A1A),
+      onChanged: (value) {
+        // Handle dropdown change
+      },
     );
   }
 
