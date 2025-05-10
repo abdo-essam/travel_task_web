@@ -4,11 +4,13 @@ import 'package:travel_task_web/core/app_export.dart';
 class MobileNavigationDrawer extends StatelessWidget {
   final int selectedIndex;
   final Function(int)? onItemSelected;
+  final VoidCallback onClose; // Added close callback
 
   const MobileNavigationDrawer({
     super.key,
     this.selectedIndex = 0,
     this.onItemSelected,
+    required this.onClose, // Make this required
   });
 
   @override
@@ -89,12 +91,24 @@ class MobileNavigationDrawer extends StatelessWidget {
               height: 40.h,
               width: 82.h,
             ),
-          )
+          ),
+          // Add a close drawer button
+          IconButton(
+            icon: Icon(
+              Icons.menu_open,
+              color: Colors.white,
+              size: 24.h,
+            ),
+            onPressed: onClose,
+            padding: EdgeInsets.zero,
+            constraints: BoxConstraints(),
+          ),
         ],
       ),
     );
   }
 
+  // Rest of the code remains the same...
   Widget _buildNavItem({
     required IconData icon,
     required String title,

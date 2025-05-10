@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 import '../../models/trip_model.dart';
 import '../../widgets/trip_card.dart';
+import 'widgets/app_bar/appbar_leading_image.dart';
 import 'widgets/app_bar/appbar_title_image.dart';
 import 'widgets/app_bar/appbar_trailing_image.dart';
 import 'widgets/app_bar/appbar_trailing_image_one.dart';
@@ -33,6 +34,12 @@ class _TripsScreenState extends State<TripsScreen> {
                 onItemSelected: (index) {
                   setState(() {
                     _selectedNavIndex = index;
+                    _isDrawerOpen = false; // Close drawer after selection
+                  });
+                },
+                onClose: () {
+                  setState(() {
+                    _isDrawerOpen = false; // Close drawer when close button is pressed
                   });
                 },
               ),
@@ -67,15 +74,15 @@ class _TripsScreenState extends State<TripsScreen> {
   PreferredSizeWidget _buildHeader(BuildContext context) {
     return CustomAppBar(
       leadingWidth: 40.h,
-      leading: IconButton(
-        icon: Icon(
-          _isDrawerOpen ? Icons.menu_open : Icons.menu,
-          color: Colors.white,
-          size: 24.h,
-        ),
-        onPressed: () {
+      // Only show the menu icon when drawer is closed
+      leading: _isDrawerOpen
+          ? null  // No leading widget when drawer is open
+          : AppbarLeadingImage(
+        imagePath: ImageConstant.imgLinearInterface,
+        margin: EdgeInsets.only(left: 16.h),
+        onTap: () {
           setState(() {
-            _isDrawerOpen = !_isDrawerOpen;
+            _isDrawerOpen = true; // Open drawer
           });
         },
       ),
@@ -85,7 +92,7 @@ class _TripsScreenState extends State<TripsScreen> {
           imagePath: ImageConstant.imgLogoipsum3321,
           height: 40.h,
           width: 82.h,
-          margin: EdgeInsets.only(left: 16.h),
+          margin: EdgeInsets.only(left: _isDrawerOpen ? 0 : 16.h),
         ),
       ),
       actions: [
@@ -95,7 +102,7 @@ class _TripsScreenState extends State<TripsScreen> {
           margin: EdgeInsets.only(left: 12.h),
         ),
         Padding(
-          padding: EdgeInsets.only(left: 12.h),
+          padding: EdgeInsets.symmetric(vertical: 12.h), // Vertical padding as requested
           child: VerticalDivider(
             width: 1.h,
             thickness: 1.h,
