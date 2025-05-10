@@ -223,8 +223,8 @@ class _WebTripsScreenState extends State<WebTripsScreen> {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: columns,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 8,
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
         // Rather than using a fixed childAspectRatio, calculate it based on the card dimensions
         childAspectRatio: 243 / 322, // Width / Height of the card
       ),

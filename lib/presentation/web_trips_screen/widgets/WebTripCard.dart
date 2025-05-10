@@ -43,7 +43,7 @@ class WebTripCard extends StatelessWidget {
                   // Image
                   Image.asset(
                     imageUrl,
-                    height: 160, // Reduced height of image
+                    height: 250 ,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
