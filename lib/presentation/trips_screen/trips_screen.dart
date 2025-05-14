@@ -77,24 +77,31 @@ class _TripsScreenState extends State<TripsScreen> {
       // Only show the menu icon when drawer is closed
       leading: _isDrawerOpen
           ? null  // No leading widget when drawer is open
-          : AppbarLeadingImage(
-        imagePath: ImageConstant.imgLinearInterface,
-        margin: EdgeInsets.only(left: 16.h),
-        onTap: () {
-          setState(() {
-            _isDrawerOpen = true; // Open drawer
-          });
-        },
-      ),
-      title: SizedBox(
-        width: double.maxFinite,
-        child: AppbarTitleImage(
-          imagePath: ImageConstant.imgLogoipsum3321,
-          height: 40.h,
-          width: 82.h,
-          margin: EdgeInsets.only(left: _isDrawerOpen ? 0 : 16.h),
+          : Row(
+            children: [
+              AppbarLeadingImage(
+                      imagePath: ImageConstant.imgLinearInterface,
+                      margin: EdgeInsets.only(left: 16.h),
+                      onTap: () {
+              setState(() {
+                _isDrawerOpen = true; // Open drawer
+              });
+                      },
+                    ),
+            ],
+          ),
+      title: Align(
+        alignment: Alignment.centerLeft,
+        child: SizedBox(
+          child: AppbarTitleImage(
+            imagePath: ImageConstant.imgLogoipsum3321,
+            height: 40.h,
+            width: 40.h,
+            margin: EdgeInsets.only(left: _isDrawerOpen ? 0 : 16.h),
+          ),
         ),
       ),
+      centerTitle: false,
       actions: [
         AppbarTrailingImage(imagePath: ImageConstant.imgSettings),
         AppbarTrailingImage(

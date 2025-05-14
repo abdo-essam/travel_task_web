@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../core/app_export.dart';
 import '../presentation/trips_screen/widgets/custom_icon_button.dart';
-import 'custom_drop_down.dart';
 
 class TripCard extends StatefulWidget {
   final String? imageUrl;
